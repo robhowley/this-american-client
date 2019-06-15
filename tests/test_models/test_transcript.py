@@ -16,11 +16,14 @@ class TestHttpClient(unittest.TestCase):
         mock_http.get.assert_called_once_with(mock_url().format(episode_number=1))
         self.assertEqual(res, mock_instance.from_html(mock_http.get().content))
 
+    @patch('thisamericanlife.models.transcript.TranscriptInstance')
     @patch('thisamericanlife.models.transcript.TranscriptHtml')
-    def test_transcript_instance_from_html(self, mock_transcript_html):
+    def test_transcript_instance_from_html(self, mock_transcript_html, mock_instance):
         res = TranscriptInstance.from_html('some-html')
         mock_transcript_html.assert_called_once_with('some-html')
         mock_transcript_html().to_json.assert_called_once()
+        mock_instance.assert_called_once_with(body_json=mock_transcript_html().to_json())
+        self.assertEqual(mock_instance(), res)
 
 
 if __name__ == '__main__':
