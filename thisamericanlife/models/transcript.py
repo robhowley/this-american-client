@@ -1,18 +1,15 @@
 
 from thisamericanlife.endpoints import get_full_url_template
+from thisamericanlife.html.transcript import TranscriptHtml
 
 
 class TranscriptInstance(object):
-    def __init__(self, payload):
-        self.payload = payload
+    @staticmethod
+    def from_html(html):
+        return TranscriptInstance(body_json=TranscriptHtml(html).to_json())
 
-    @property
-    def episode_number(self):
-        return self.payload['episode_number']
-
-    def episode(self):
-        from thisamericanlife.models.episode import EpidsodeInstance
-        return Epidsodes().get(self.episode_number)
+    def __init__(self, **kwargs):
+        self.kwargs = kwargs
 
 
 class Transcripts(object):
@@ -21,4 +18,6 @@ class Transcripts(object):
         self._endpoint = get_full_url_template('transcript')
 
     def get(self, episode_number):
-        self.http_client.get(self._endpoint.format(episode_number=episode_number))
+        resp = self.http_client.get(self._endpoint.format(episode_number=episode_number))
+
+        return TranscriptInstance.from_html(resp.content)
