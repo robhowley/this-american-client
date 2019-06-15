@@ -1,5 +1,5 @@
 # this american client
-the this american life client library
+the [this american life](https://www.thisamericanlife.org/) client library
 
 ## Install
 
