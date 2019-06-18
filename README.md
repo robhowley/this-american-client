@@ -1,5 +1,8 @@
 # this american client
-the [this american life](https://www.thisamericanlife.org/) client library
+The [This American Life](https://www.thisamericanlife.org/) client library. 
+
+Get structured data on transcripts, episodes, et c without worrying about all of the web scraping details. Intermediate
+results are cached to keep it snappy.
 
 ## Install
 
