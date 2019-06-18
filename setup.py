@@ -20,6 +20,6 @@ setup(
     author_email=tal_module_ref.__author_email__,
     url='https://github.com/{package_name}',
     packages=find_packages(exclude=['tests']),
-    install_requires=['lxml'],
+    install_requires=['lxml', 'requests'],
     python_requires='>=3.6.0'
 )
