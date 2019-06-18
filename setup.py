@@ -3,8 +3,8 @@ from os import path
 from setuptools import setup, find_packages
 
 
-package_name = 'thisamericanlife'
-tal_module_ref = __import__(package_name)
+package_name = 'this-american-life'
+tal_module_ref = __import__(package_name.replace('-', ''))
 
 # read the README
 this_directory = path.abspath(path.dirname(__file__))
