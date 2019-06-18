@@ -1,10 +1,32 @@
 
 import unittest
 from unittest.mock import patch, MagicMock
-from thisamericanlife.models.transcript import Transcripts, TranscriptInstance
+from thisamericanlife.models.transcript import Transcripts, TranscriptInstance, EpisodeMeta
 
 
-class TestHttpClient(unittest.TestCase):
+class TestTranscriptModels(unittest.TestCase):
+    @patch('thisamericanlife.models.transcript.EpisodeMeta')
+    def test_init(self, mock_ep_meta):
+        body_json = dict(transcript='tr', episode_title='et')
+        ti = TranscriptInstance(body_json=body_json)
+
+        self.assertDictEqual(ti.body_json, body_json)
+        mock_ep_meta.from_raw.assert_called_once_with('et')
+        ti.episode_meta_info = mock_ep_meta.from_raw()
+        ti.transcript = 'tr'
+
+    def run_episode_meta_from_raw(self, *args):
+        em = EpisodeMeta.from_raw(args[0])
+        self.assertTupleEqual((em.raw_title, em.title, em.number), args)
+
+    def test_episode_meta_from_raw_success(self):
+        self.run_episode_meta_from_raw('1: title', 'title', 1)
+
+    def test_episode_meta_from_fail(self):
+        self.run_episode_meta_from_raw('a: title', 'title', None)
+
+    def test_episode_meta_from_empty(self):
+        self.run_episode_meta_from_raw('', None, None)
 
     @patch('thisamericanlife.models.transcript.TranscriptInstance')
     @patch('thisamericanlife.models.transcript.get_full_url_template')
