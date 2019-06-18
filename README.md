@@ -13,7 +13,8 @@ pip install this-american-life
 ```python
 from thisamericanlife import ThisAmericanLife
 
-ep_one_transcript = ThisAmericanLife().transcripts.get(1)
+tal = ThisAmericanLife()
+ep_one_transcript = tal.transcripts.get(episode_number=1)
 
 print(ep_one_transcript.transcript)
 ```
