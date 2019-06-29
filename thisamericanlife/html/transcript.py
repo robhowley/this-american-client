@@ -1,5 +1,6 @@
 
-from lxml import html as lxml_html
+# from lxml import html as lxml_html
+from thisamericanlife.html.base import BaseHtmlParser
 
 
 def get_header_text(el):
@@ -18,14 +19,10 @@ def get_act_lines(act_content):
     ]
 
 
-class TranscriptHtml(object):
+class TranscriptHtml(BaseHtmlParser):
     EPISODE_TITLE_PATH = '//div[@id="content"]//header'
     ACT_PATH = '//div[@class="act"]'
     ACT_SCRIPT_PATH = './div[@class="act-inner"]/div'
-
-    def __init__(self, html_string=None):
-        self.html_string = html_string
-        self.document_tree = lxml_html.fromstring(self.html_string)
 
     def extract_episode_title(self):
         episode_info = self.document_tree.xpath(TranscriptHtml.EPISODE_TITLE_PATH)

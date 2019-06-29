@@ -1,11 +1,11 @@
 
 from dataclasses import dataclass
-from thisamericanlife.endpoints import get_full_url_template
+from thisamericanlife.models.basemodel import BaseResource
 from thisamericanlife.html.transcript import TranscriptHtml
 
 
 @dataclass
-class EpisodeMeta(object):
+class EpisodeMetadata(object):
     raw_title: str
     title: str = None
     number: int = None
@@ -25,22 +25,20 @@ class EpisodeMeta(object):
 
 
 class TranscriptInstance(object):
+    
     @staticmethod
     def from_html(html):
         return TranscriptInstance(body_json=TranscriptHtml(html).to_json())
 
     def __init__(self, body_json=None):
         self.body_json = body_json
-        self.episode_meta_info = EpisodeMeta.from_raw(self.body_json['episode_title'])
+        self.episode_metadata = EpisodeMetadata.from_raw(self.body_json['episode_title'])
         self.transcript = self.body_json['transcript']
 
 
-class Transcripts(object):
-    def __init__(self, http_client=None):
-        self.http_client = http_client
-        self._endpoint = get_full_url_template('transcript')
+class Transcripts(BaseResource):
+    def __init__(self, client=None):
+        super(Transcripts, self).__init__('transcript', client=client)
 
     def get(self, episode_number):
-        resp = self.http_client.get(self._endpoint.format(episode_number=episode_number))
-
-        return TranscriptInstance.from_html(resp.content)
+        return self._get_and_create(TranscriptInstance, episode_number=episode_number)
