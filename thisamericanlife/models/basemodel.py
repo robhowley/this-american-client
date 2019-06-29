@@ -1,6 +1,9 @@
 
+from thisamericanlife.endpoints import get_full_url_template
+
 
 class BaseResource(object):
+
     def __init__(self, path_name, client=None):
         self.client = client
         self._endpoint = get_full_url_template(path_name)

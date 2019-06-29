@@ -1,11 +1,11 @@
 
 import unittest
 from unittest.mock import patch, MagicMock
-from thisamericanlife.models.transcript import Transcripts, TranscriptInstance, EpisodeMeta
+from thisamericanlife.models.transcript import Transcripts, TranscriptInstance, EpisodeMetadata
 
 
 class TestTranscriptModels(unittest.TestCase):
-    @patch('thisamericanlife.models.transcript.EpisodeMeta')
+    @patch('thisamericanlife.models.transcript.EpisodeMetadata')
     def test_init(self, mock_ep_meta):
         body_json = dict(transcript='tr', episode_title='et')
         ti = TranscriptInstance(body_json=body_json)
@@ -16,7 +16,7 @@ class TestTranscriptModels(unittest.TestCase):
         ti.transcript = 'tr'
 
     def run_episode_meta_from_raw(self, *args):
-        em = EpisodeMeta.from_raw(args[0])
+        em = EpisodeMetadata.from_raw(args[0])
         self.assertTupleEqual((em.raw_title, em.title, em.number), args)
 
     def test_episode_meta_from_raw_success(self):
@@ -28,15 +28,13 @@ class TestTranscriptModels(unittest.TestCase):
     def test_episode_meta_from_empty(self):
         self.run_episode_meta_from_raw('', None, None)
 
-    @patch('thisamericanlife.models.transcript.TranscriptInstance')
-    @patch('thisamericanlife.models.transcript.get_full_url_template')
-    def test_transcripts_get(self, mock_url, mock_instance):
+    @patch('thisamericanlife.models.transcript.Transcripts._get_and_create')
+    def test_transcripts_get(self, mock_get_create):
         mock_http = MagicMock()
         res = Transcripts(mock_http).get(1)
 
-        mock_url.assert_called_once_with('transcript')
-        mock_http.get.assert_called_once_with(mock_url().format(episode_number=1))
-        self.assertEqual(res, mock_instance.from_html(mock_http.get().content))
+        mock_get_create.assert_called_once_with(TranscriptInstance, episode_number=1)
+        self.assertEqual(res, mock_get_create())
 
     @patch('thisamericanlife.models.transcript.TranscriptInstance')
     @patch('thisamericanlife.models.transcript.TranscriptHtml')

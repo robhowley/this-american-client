@@ -21,7 +21,7 @@ class EpisodeMetadata(object):
             except:
                 episode_number = None
 
-        return EpisodeMeta(raw_string, episode_title, episode_number)
+        return EpisodeMetadata(raw_string, episode_title, episode_number)
 
 
 class TranscriptInstance(object):

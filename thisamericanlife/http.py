@@ -8,7 +8,6 @@ class HttpClient(object):
 
     @lru_cache(maxsize=64)
     def get(self, endpoint, **kwargs):
-        print('executing call')
         resp = requests.get(endpoint.format(**kwargs))
         resp.raise_for_status()
         return resp
