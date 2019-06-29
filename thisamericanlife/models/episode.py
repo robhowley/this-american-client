@@ -11,7 +11,7 @@ class EpisodeInstance(object):
 
     def __init__(self, body_json=None):
         self.body_json = body_json
-        self.episode_meta_info = EpisodeMeta.from_raw(self.body_json['episode_title'])
+        self.episode_metadata = EpisodeMeta.from_raw(self.body_json['episode_title'])
 
 
 class Episodes(BaseResource):
