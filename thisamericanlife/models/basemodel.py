@@ -6,6 +6,7 @@ class BaseResource(object):
 
     def __init__(self, path_name, client=None):
         self.client = client
+        self.path_name = path_name
         self._endpoint = get_full_url_template(path_name)
 
     def _get_and_create(self, instance_type, **kwargs):

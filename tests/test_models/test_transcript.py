@@ -30,8 +30,7 @@ class TestTranscriptModels(unittest.TestCase):
 
     @patch('thisamericanlife.models.transcript.Transcripts._get_and_create')
     def test_transcripts_get(self, mock_get_create):
-        mock_http = MagicMock()
-        res = Transcripts(mock_http).get(1)
+        res = Transcripts().get(1)
 
         mock_get_create.assert_called_once_with(TranscriptInstance, episode_number=1)
         self.assertEqual(res, mock_get_create())
