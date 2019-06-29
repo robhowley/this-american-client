@@ -1,5 +1,4 @@
 
-# from lxml import html as lxml_html
 from thisamericanlife.html.base import BaseHtmlParser
 
 

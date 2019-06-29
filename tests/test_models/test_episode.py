@@ -17,12 +17,12 @@ class TestEpisodeModels(unittest.TestCase):
     @patch('thisamericanlife.models.episode.Episodes._get_and_create')
     def test_episodes_get_with_name_looked_up(self, mock_get_create):
         episodes = Episodes()
-        episodes.transcripts = MagicMock()
+        episodes.client = MagicMock()
 
         episode_number = 1
         res = episodes.get(episode_number=episode_number)
 
-        episode_title = episodes.transcripts.get(episode_number).episode_metadata.title
+        episode_title = episodes.client.transcripts.get(episode_number).episode_metadata.title
 
         mock_get_create.assert_called_once_with(
             EpisodeInstance,

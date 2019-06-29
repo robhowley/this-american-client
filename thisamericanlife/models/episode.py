@@ -11,7 +11,6 @@ class EpisodeInstance(object):
 
     def __init__(self, body_json=None):
         self.body_json = body_json
-        self.episode_metadata = EpisodeMeta.from_raw(self.body_json['episode_title'])
 
 
 class Episodes(BaseResource):
@@ -19,6 +18,6 @@ class Episodes(BaseResource):
         super(Episodes, self).__init__('episode', client=client)
 
     def get(self, episode_number=None, episode_title=None):
-        episode_title = episode_title or self.transcripts.get(episode_number).episode_metadata.title
+        episode_title = episode_title or self.client.transcripts.get(episode_number).episode_metadata.title
 
         return self._get_and_create(EpisodeInstance, episode_number=episode_number, episode_title=episode_title)
