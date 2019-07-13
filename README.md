@@ -23,8 +23,8 @@ tal = ThisAmericanLife()
 ```python
 ep_one = tal.episodes.get(episode_number=1)
 
-print('Title       : ' + ep_one.transcript)
-print('Date on air : ' + ep_one.transcript)
+print('Title       : ' + ep_one.title)
+print('Date on air : ' + ep_one.date_on_air)
 print('Description : ' + ep_one.description)
 
 # the name and short description of each act
