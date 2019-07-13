@@ -1,4 +1,6 @@
 # this american client
+[![PyPI version](https://badge.fury.io/py/this-american-life.svg)](https://badge.fury.io/py/this-american-life)
+
 The [This American Life](https://www.thisamericanlife.org/) client library. 
 
 Get structured data on transcripts, episodes, et c without worrying about all of the web scraping details. Intermediate
