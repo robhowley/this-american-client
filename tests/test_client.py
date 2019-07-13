@@ -6,16 +6,18 @@ from thisamericanlife.client import ThisAmericanLife
 class TestHttpClient(unittest.TestCase):
     @patch('thisamericanlife.client.HttpClient')
     def test_set_client(self, mock_http):
-        self.assertEqual(ThisAmericanLife('http')._http, 'http')
-        self.assertEqual(ThisAmericanLife()._http, mock_http())
+        self.assertEqual(ThisAmericanLife('http').http_client, 'http')
+        self.assertEqual(ThisAmericanLife().http_client, mock_http())
 
     @patch('thisamericanlife.client.tal_models')
     def test_create_transcripts(self, mock_models):
-        obj = ThisAmericanLife('http').transcripts
-        exp_type = mock_models.transcript.Transcripts
+        tal = ThisAmericanLife('http')
 
-        exp_type.assert_called_once_with('http')
-        self.assertEqual(obj, exp_type())
+        property_res = tal.transcripts
+        expected_type = mock_models.transcript.Transcripts
+        expected_type.assert_called_once_with(tal)
+
+        self.assertEqual(property_res, expected_type())
 
 
 if __name__ == '__main__':
