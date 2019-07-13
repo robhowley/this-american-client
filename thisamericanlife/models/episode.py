@@ -11,8 +11,11 @@ class EpisodeInstance(object):
 
     def __init__(self, body_json=None, episode_number=None, episode_title=None):
         self.body_json = body_json
-        self.episode_number = episode_number
-        self.episode_title = episode_title
+        self.number = episode_number
+        self.title = episode_title
+        self.date_on_air = body_json['episode_metadata'].get('date_on_air')
+        self.description = body_json['episode_metadata'].get('description')
+        self.act_summaries = body_json['act_summaries']
 
 
 class Episodes(BaseResource):
@@ -23,6 +26,6 @@ class Episodes(BaseResource):
         episode_title = episode_title or self.client.transcripts.get(episode_number).episode_metadata.title
 
         ep_instance = self._get_and_create(EpisodeInstance, episode_number=episode_number, episode_title=episode_title)
-        ep_instance.episode_number = episode_number
-        ep_instance.episode_title = episode_title
+        ep_instance.number = episode_number
+        ep_instance.title = episode_title
         return ep_instance
