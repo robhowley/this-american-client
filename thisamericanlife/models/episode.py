@@ -9,8 +9,10 @@ class EpisodeInstance(object):
     def from_html(html):
         return EpisodeInstance(body_json=EpisodeHtml(html).to_json())
 
-    def __init__(self, body_json=None):
+    def __init__(self, body_json=None, episode_number=None, episode_title=None):
         self.body_json = body_json
+        self.episode_number = episode_number
+        self.episode_title = episode_title
 
 
 class Episodes(BaseResource):
@@ -20,4 +22,7 @@ class Episodes(BaseResource):
     def get(self, episode_number=None, episode_title=None):
         episode_title = episode_title or self.client.transcripts.get(episode_number).episode_metadata.title
 
-        return self._get_and_create(EpisodeInstance, episode_number=episode_number, episode_title=episode_title)
+        ep_instance = self._get_and_create(EpisodeInstance, episode_number=episode_number, episode_title=episode_title)
+        ep_instance.episode_number = episode_number
+        ep_instance.episode_title = episode_title
+        return ep_instance
