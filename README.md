@@ -39,7 +39,6 @@ ep_one_transcript = tal.transcripts.get(episode_number=1)
 
 print(ep_one_transcript.transcript[0])
 
-
 # result ...
 # {
 #   "act_id": "prologue", "act_number": 1, "act_title": "Prologue", 
