@@ -12,7 +12,7 @@ def get_lines(el):
 
 def get_act_lines(act_content):
     return [
-        dict(speaker_lines, speaker=speaker_block.get('class'))
+        dict(speaker_lines, speaker=speaker_block.get('class'), speaker_name=get_header_text(speaker_block))
         for speaker_block in act_content
         for speaker_lines in get_lines(speaker_block)
     ]
